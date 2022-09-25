@@ -42,6 +42,7 @@ class UsersController {
         }
         
     }catch(err){
+        console.log(err);
         res.status(200).json({err})
     }
   }

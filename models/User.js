@@ -16,7 +16,7 @@ class User {
     }
 
     static async getUser(email){
-        const query = "SELECT email, password FROM users WHERE email=$1";
+        const query = "SELECT id, email, password FROM users WHERE email=$1";
         const values = [email]
         try {
             const res = await pool.query(query, values)
