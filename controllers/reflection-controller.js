@@ -29,6 +29,21 @@ class ReflectionController {
             next(err) //internal server error
         }
     }
+    
+    static async update(req, res, next) {
+        
+    }
+
+    static async delete(req, res, next) {
+        try{
+            const deleteData = await Reflection.deleteReflections(req.params.id);
+            if(deleteData.succeed == true){
+                res.status(200).json({message: "reflection deleted"});
+            } 
+        } catch(err){
+            next(err) //internal server error
+        }
+    }
 }
 
 module.exports = ReflectionController;

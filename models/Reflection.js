@@ -15,6 +15,7 @@ class Reflection {
             return {err}
         }
     }
+
     static async getReflections(owner_id){
         const query = "SELECT succes, low_point, take_away, created_date, modified_date FROM reflections WHERE owner_id=$1";
         const values = [owner_id];
@@ -30,5 +31,21 @@ class Reflection {
 
     }
 
+    static async updateReflections(owner_id, data){
+        const query = "UPDATE reflections SET"
+    }
+
+    static async deleteReflections(id) {
+        const query = "DELETE FROM reflections WHERE id=$1";
+        const values = [id];
+        try{
+            const res = await pool.query(query, values);
+            return {
+                "succeed": true
+            }
+        } catch (error) {
+            next(error);
+        }
+    }
 }
 module.exports = Reflection;
