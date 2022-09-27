@@ -31,14 +31,25 @@ class ReflectionController {
     }
     
     static async update(req, res, next) {
-        
+        const {succes, low_point, take_away} = req.body;
+        try {
+            if (!Object.keys(req.body).length) throw Error('Request Kosong');
+                const updateData = await Reflection.updateReflections(succes, low_point, take_away, req.params.id);
+                if(updateData.succeed == true){
+                    const { data } = updateData;
+                    res.status(201).json({data,message: "reflections updated"});
+                }
+        }catch(err){
+            next(err) //internal server error
+        }
     }
 
     static async delete(req, res, next) {
         try{
             const deleteData = await Reflection.deleteReflections(req.params.id);
             if(deleteData.succeed == true){
-                res.status(200).json({message: "reflection deleted"});
+                const { data } = deleteData;
+                res.status(200).json({data,message: "reflection deleted"});
             } 
         } catch(err){
             next(err) //internal server error

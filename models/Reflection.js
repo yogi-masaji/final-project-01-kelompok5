@@ -28,11 +28,21 @@ class Reflection {
         } catch (error) {
             next(error);
         }
-
     }
 
-    static async updateReflections(owner_id, data){
-        const query = "UPDATE reflections SET"
+    static async updateReflections(succes, low_point, take_away, id){
+        const query = "UPDATE reflections SET succes = $1, low_point = $2, take_away = $3, modified_date=$4 WHERE id = $5";
+        const values = [succes, low_point, take_away, new Date(), id];
+        try {
+            const res = await pool.query(query, values);
+            const data = res.rows[0];   
+            return {
+                "data": data,
+                "succeed": true
+            }
+        }catch (err) {
+            next(err)
+        }
     }
 
     static async deleteReflections(id) {
